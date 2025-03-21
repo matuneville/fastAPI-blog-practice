@@ -14,7 +14,7 @@ from app.db import get_db
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Configuration for JWT
-SECRET_KEY = "your-secret-key"  # Replace with a secure secret key
+SECRET_KEY = "key12345"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
