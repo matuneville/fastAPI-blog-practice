@@ -7,7 +7,7 @@ Each class represents a database table.
 
 from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from db import Base
+from app.db import Base
 from datetime import datetime, timezone
 
 
@@ -32,9 +32,9 @@ class User(Base):
     creation_dt = Column(DateTime, default=datetime.now(timezone.utc))
 
     # Define relationships
-    videos = relationship(
-        "Video",
-        back_populates="owner" # Video has a corresponding owner attr to refer back to the User
+    posts = relationship(
+        "Post",
+        back_populates="owner" # Post has a corresponding owner attr to refer back to the User
         )
 
     followers = relationship(
@@ -46,39 +46,38 @@ class User(Base):
         )
     
 
-class Video(Base):
-    __tablename__ = "videos"
+class Post(Base):
+    __tablename__ = "posts"
 
-    # Define columns for videos db
+    # Define columns for posts db
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(127), nullable=False)
-    video_url = Column(String(500), nullable=False)
+    text = Column(String(127), nullable=False)
     
     timestamp = Column(DateTime, default=datetime.now(timezone.utc))
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     # Define relationships
-    owner = relationship("User", back_populates="videos")
-    likes = relationship("Like", back_populates="video")
-    shares = relationship("Share", back_populates="video")
+    owner = relationship("User", back_populates="posts")
+    likes = relationship("Like", back_populates="post")
+    shares = relationship("Share", back_populates="post")
 
 
 class Like(Base):
     __tablename__ = "likes"
 
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
-    video_id = Column(Integer, ForeignKey("videos.id"), primary_key=True)
+    post_id = Column(Integer, ForeignKey("posts.id"), primary_key=True)
 
     user = relationship("User")
-    video = relationship("Video", back_populates="likes")
+    post = relationship("Post", back_populates="likes")
 
 
 class Share(Base):
     __tablename__ = "shares"
 
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
-    video_id = Column(Integer, ForeignKey("videos.id"), primary_key=True)
+    post_id = Column(Integer, ForeignKey("posts.id"), primary_key=True)
     timestamp = Column(DateTime, default=datetime.now(timezone.utc))
 
     user = relationship("User")
-    video = relationship("Video", back_populates="shares")
+    post = relationship("Post", back_populates="shares")

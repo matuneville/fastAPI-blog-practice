@@ -34,26 +34,25 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 
 
-# Video schemas
-class VideoBase(BaseModel):
-    title: str
-    video_url: str
+# Post schemas
+class PostBase(BaseModel):
+    text: str
 
-class VideoCreate(VideoBase):
+class PostCreate(PostBase):
     pass
 
-class Video(VideoBase):
+class Post(PostBase):
     id: int
     owner_id: int
     timestamp: datetime
 
-class VideoWithStats(Video):
+class PostWithStats(Post):
     likes_count: int
     shares_count: int
     owner_username: str
 
-class VideoUpdate(BaseModel):
-    title: str
+class PostUpdate(BaseModel):
+    text: str
     class Config:
         from_attributes = True
 
