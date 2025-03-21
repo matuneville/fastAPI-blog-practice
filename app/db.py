@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # SQLite3 db URL
-SQL_ALCHEMY_DB_URL = "sqlite:///./vlog-app.db"
+SQL_ALCHEMY_DB_URL = "sqlite:///./blog-app.db"
 
 # Create an engine to interact with the SQLite database
 engine = create_engine(SQL_ALCHEMY_DB_URL, connect_args={"check_same_thread": False})
