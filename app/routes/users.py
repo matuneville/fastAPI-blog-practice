@@ -21,7 +21,7 @@ def create_user(user: schemas.UserCreate, db: db_dependency):
     if users_db:
         raise_conflict_except("Error: Username already exists")
 
-    hashed_passwd = auth.get_hashed_passwd(user.password)
+    hashed_passwd = auth.get_hashed_passwd(user.passwd)
     new_user = models.User(username=user.username,
                            email=user.email,
                            hashed_passwd=hashed_passwd)
